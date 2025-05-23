@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+import asyncio
 import os
 
 # === CONFIG ===
@@ -16,4 +17,10 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 async def on_ready():
     print(f"Logged in as {bot.user}")
 
-bot.run(TOKEN, log_handler=None)
+@bot.event
+async def main():
+    # Load the TicTacToe feature
+    await bot.load_extension("features.tictactoe.feature")
+    await bot.start(TOKEN)
+
+asyncio.run(main())
